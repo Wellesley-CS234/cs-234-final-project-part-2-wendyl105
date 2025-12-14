@@ -173,7 +173,7 @@ st.plotly_chart(fig_line, use_container_width=True)
 # --- Stacked Bar Chart: Distribution of Labels by Country ---
 st.header("Distribution of Article Types by Country")
 
-all_labels = ["political", "non-political", "No QID"]
+all_labels = ["No QID", "non-political", "political"]
 selected_labels = st.multiselect(
     "Select which labels to include:",
     options=all_labels,
