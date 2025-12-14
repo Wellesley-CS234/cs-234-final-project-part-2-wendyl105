@@ -38,12 +38,12 @@ st.table(df_elections)
 st.markdown("---")
 
 st.header("Data Summary")
-st.markdown("The dataset consists of the **top 10,000 most-viewed Wikipedia articles** across five countries (United States, United Kingdom, Canada, Australia, and India) during the years **2023–2024**. Each CSV file contains daily pageviews for articles, along with metadata such as article ID, QID (Wikidata identifier), and project language.")
+st.markdown("The dataset consists of the **pageviewes of the top 10,000 most-viewed Wikipedia articles** across five countries (United States, United Kingdom, Canada, Australia, and India) during the years **2023–2024**.")
 st.markdown("**Time Interval:** February 2023 – December 2024")
 st.markdown("**Wiki:** English Wikipedia (`en.wikipedia`)")
 st.markdown("**Countries:** United States, United Kingdom, Canada, Australia, India")
 
-st.markdown("**CSV Files:** 10,000 unique articles per country (top 10,000 viewed) with columns: `date`, `country`, `country_code`, `project`, `page_id`, `article`, `qid`, `views`, `description`, `label`")
+st.markdown("**CSV File:** The CSV files consists of the 'date', 'country_code', 'label', and total 'pageviews' of that label and country for that day")
 
 st.markdown("---")
 
@@ -55,72 +55,77 @@ st.markdown("---")
 
 
 # --- Load Data ---
-usa = pd.read_csv("my_data/top_united_states.csv")
-uk = pd.read_csv("my_data/top_uk.csv")
-canada = pd.read_csv("my_data/top_canada.csv")
-australia = pd.read_csv("my_data/top_australia.csv")
-india = pd.read_csv("my_data/top_india.csv")
+df = pd.read_csv("daily_label_summary.csv")
 
-datasets = {
-    "USA": usa,
-    "UK": uk,
-    "Canada": canada,
-    "Australia": australia,
-    "India": india
+c_codes = {
+    "USA": 'US',
+    "UK": "GB",
+    "Canada": "CS",
+    "Australia": "AU",
+    "India": "IN"
 }
 
-df = pd.concat(datasets.values(), ignore_index=True)
 
-# Ensure date column is datetime
 df['date'] = pd.to_datetime(df['date'])
 
 # --- Dataset Preview ---
 st.header("Dataset Overview")
-country = st.selectbox("Select a country to preview its dataset:", datasets.keys())
+country = st.selectbox("Select a country to preview its dataset:", c_codes.keys())
 st.write("#### Sample Rows")
-st.dataframe(datasets[country].head())
+st.dataframe(df.head())
 st.write("#### Summary Statistics")
-st.write(datasets[country].describe())
+st.write(df.describe())
 st.write("#### Classifier Accuracy")
 st.write("92.795%")
 
 
-# --- Populations for each Country ---
-
-population = {
-    "United States": 331000000,
-    "United Kingdom": 67000000,
-    "Canada": 38000000,
-    "Australia": 26000000,
-    "India": 1380000000
-}
-
 # --- Bar Chart: Political vs Non-Political ---
-st.header("Political vs Non-Political Articles per Capita")
+st.header("Political vs Non-Political Pageviews")
 
-box_df = df.groupby(['country', 'label'])['views'].sum().reset_index()
-
-box_df['views_per_capita'] = box_df.apply(
-    lambda row: row['views'] / population[row['country']],
-    axis=1
+min_date, max_date = df['date'].min().date(), df['date'].max().date()
+selected_years = st.slider(
+    "Select date range:",
+    min_value=min_date,
+    max_value=max_date,
+    value=(min_date, max_date),
+    step=timedelta(days=30)
 )
 
-fig_box = px.bar(
-    box_df,
-    x="country",
-    y="views_per_capita",
+min_selected, max_selected = selected_years
+mask = (df['date'].dt.date >= min_selected) & (df['date'].dt.date <= max_selected)
+filtered_df = df[mask]
+
+bar_data = (
+    filtered_df
+    .groupby(["country_code", "label"])["views"]
+    .sum()
+    .reset_index()
+)
+
+selected_country = st.multiselect(
+    "Countries to display:",
+    options=bar_data['country_code'].unique(),
+    default=bar_data['country_code'].unique()
+)
+
+bar_data  = bar_data[bar_data['country_code'].isin(selected_country)]
+
+fig_bar = px.bar(
+    bar_data,
+    x="country_code",
+    y="views",
     color="label",
     barmode="group",
-    title="Political vs Non-Political Pageviews Per Capita"
+    title="Political vs Non-Political Pageviews"
 )
 
-st.plotly_chart(fig_box, use_container_width=True, key="box_plot")
+st.plotly_chart(fig_bar, use_container_width=True)
 
 # --- Line Chart: Political Articles Over Time ---
-st.header("Political Article Trends Over Time (Per Capita)")
+st.header("Political Article Trends Over Time")
 
-# Date range slider
 min_date, max_date = df['date'].min().date(), df['date'].max().date()
+
 selected_years = st.slider(
     "Select date range of Wikipedia pageviews to display:",
     min_value=min_date,
@@ -133,31 +138,28 @@ min_selected, max_selected = selected_years
 mask = (df['date'].dt.date >= min_selected) & (df['date'].dt.date <= max_selected)
 filtered_df = df[mask]
 
-# Aggregate monthly counts of political articles
 monthly = (
     filtered_df[filtered_df['label'] == "political"]
-    .groupby([pd.Grouper(key='date', freq='M'), 'country'])
-    .size()
-    .reset_index(name='political_count')
+    .groupby([pd.Grouper(key='date', freq='M'), 'country_code'])['views']
+    .sum()
+    .reset_index(name='political_views')
 )
 
 selected_country = st.multiselect(
     "Countries to display:",
-    options=monthly['country'].unique(),
-    default=monthly['country'].unique()
+    options=monthly['country_code'].unique(),
+    default=monthly['country_code'].unique(),
+    key="lineplot"
 )
 
-monthly['political_per_capita'] = monthly.apply(
-    lambda row: row['political_count'] / population[row['country']],
-    axis=1
-)
+monthly = monthly[monthly['country_code'].isin(selected_country)]
 
 fig_line = px.line(
     monthly,
     x="date",
-    y="political_per_capita",
-    color="country",
-    title="Political Articles Over Time (Per Capita)"
+    y="political_views",
+    color="country_code",
+    title="Total Political Article Views Over Time"
 )
 
 fig_line.update_layout(
@@ -166,7 +168,64 @@ fig_line.update_layout(
     height=500
 )
 
-st.plotly_chart(fig_line, use_container_width=True, key="line_plot")
+st.plotly_chart(fig_line, use_container_width=True)
+
+# --- Stacked Bar Chart: Distribution of Labels by Country ---
+st.header("Distribution of Article Types by Country")
+
+all_labels = ["political", "non-political", "No QID"]
+selected_labels = st.multiselect(
+    "Select which labels to include:",
+    options=all_labels,
+    default=all_labels
+)
+
+filtered_df = df[df["label"].isin(selected_labels)]
+
+min_date, max_date = df['date'].min().date(), df['date'].max().date()
+selected_range = st.slider(
+    "Select date range:",
+    min_value=min_date,
+    max_value=max_date,
+    value=(min_date, max_date)
+)
+
+start, end = selected_range
+mask = (filtered_df['date'].dt.date >= start) & (filtered_df['date'].dt.date <= end)
+filtered_df = filtered_df[mask]
+
+agg = (
+    filtered_df
+    .groupby(["country_code", "label"])["views"]
+    .sum()
+    .reset_index()
+)
+
+total_views = agg.groupby("country_code")["views"].transform("sum")
+agg["percent"] = agg["views"] / total_views * 100
+
+fig = px.bar(
+    agg,
+    x="country_code",
+    y="views",
+    color="label",
+    title="Stacked Distribution of Article Types by Country",
+    barmode="stack",
+    hover_data={
+        "views": True,
+        "percent": ":.1f",
+        "label": True,
+        "country_code": False
+    }
+)
+
+fig.update_layout(
+    yaxis_title="Total Views",
+    legend_title_text="Article Type",
+    height=500
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("### Monthly Sample Table")
 st.dataframe(monthly.head(20))
