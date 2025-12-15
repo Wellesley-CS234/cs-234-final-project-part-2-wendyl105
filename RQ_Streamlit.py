@@ -223,6 +223,14 @@ At least one country differs.
 
 
 with graphs:
+    st.header("Interactive Visualizations")
+    st.markdown("""
+- AU: Australia
+- CA: Canada
+- GB: United Kingdom
+- IN: India
+- US: United States
+""")
     # --- Bar Chart: Political vs Non-Political ---
     st.header("Political vs Non-Political Pageviews")
 
