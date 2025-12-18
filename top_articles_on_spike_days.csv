@@ -1,0 +1,61 @@
+date,country,country_code,project,page_id,article,qid,views,description,label
+2023-05-06,Australia,AU,en.wikipedia,125248,"Charles,_King_of_the_United_Kingdom",Q43274,49629,King of the United Kingdom and other Commonwealth realms since 2022 (born 1948),political
+2023-05-06,Australia,AU,en.wikipedia,160811,"Camilla,_Duchess_of_Cornwall",Q152239,37911,Queen Consort of the United Kingdom since 2022,political
+2023-05-06,Australia,AU,en.wikipedia,12153654,Elizabeth_II,Q9682,29104,Queen of the United Kingdom from 1952 to 2022,political
+2023-10-14,Australia,AU,en.wikipedia,1360939,Referendums_in_Australia,Q7307166,34177,Referendums to approve changes to the Constitution of Australia or its states or territories,political
+2023-10-14,Australia,AU,en.wikipedia,73365117,2023_Australian_Indigenous_Voice_referendum,Q117281286,33478,Australian federal referendum held in 2023,political
+2023-10-14,Australia,AU,en.wikipedia,1363333,1999_Australian_republic_referendum,Q2559142,20594,referendum to make Australia a Republic,political
+2024-11-06,Australia,AU,en.wikipedia,48410011,2020_U.S._presidential_election,Q22923830,147355,59th quadrennial U.S. presidential election,political
+2024-11-06,Australia,AU,en.wikipedia,59568546,2024_U.S._presidential_election,Q101110072,125207,60th quadrennial U.S. presidential election,political
+2024-11-06,Australia,AU,en.wikipedia,4848272,Donald_J._Trump,Q22686,97161,"president of the United States (2017–2021, 2025–present)",political
+2024-11-06,Canada,CA,en.wikipedia,59568546,2024_U.S._presidential_election,Q101110072,234417,60th quadrennial U.S. presidential election,political
+2024-11-06,Canada,CA,en.wikipedia,48410011,2020_U.S._presidential_election,Q22923830,195298,59th quadrennial U.S. presidential election,political
+2024-11-06,Canada,CA,en.wikipedia,4848272,Donald_J._Trump,Q22686,119992,"president of the United States (2017–2021, 2025–present)",political
+2023-03-24,India,IN,en.wikipedia,3445234,Kitty_O'Neil,Q6418591,1132745,American racing driver and stuntwoman (1946–2018),political
+2023-03-24,India,IN,en.wikipedia,305010,Rahul_Gandhi,Q10218,93538,Indian politician (born 1970),political
+2023-03-24,India,IN,en.wikipedia,60827,Cleopatra,Q635,58992,queen of the Ptolemaic Kingdom of Egypt from 51 to 30 BCE,political
+2023-05-13,India,IN,en.wikipedia,67520597,2023_Karnataka_Legislative_Assembly_election,Q106816679,477363,State election in India,political
+2023-05-13,India,IN,en.wikipedia,53464835,2018_Karnataka_Legislative_Assembly_election,Q30594386,242549,elections to the lower house of the parliament of the South Indian state,political
+2023-05-13,India,IN,en.wikipedia,46276,Mother's_Day,Q47502,202057,celebration honoring mothers,political
+2023-12-03,India,IN,en.wikipedia,67669392,2023_Telangana_Legislative_Assembly_election,Q107016831,301197,assembly elections in Telangana,political
+2023-12-03,India,IN,en.wikipedia,65934180,2023_elections_in_India,Q104874438,257038,Elections in India in 2023,political
+2023-12-03,India,IN,en.wikipedia,35668809,A.Revanth_Reddy,Q7317733,205292,Indian politician,political
+2024-06-04,India,IN,en.wikipedia,42784744,2019_Indian_General_election,Q28164181,925114,"elections for the 17th Lok Sabha, India",political
+2024-06-04,India,IN,en.wikipedia,409896,National_Democratic_Alliance,Q129815,707438,"political coalition in India, led by the BJP",political
+2024-06-04,India,IN,en.wikipedia,74383370,INDIA_Alliance,Q120739928,656394,big-tent opposition coalition led by the Indian National Congress founded in 2023,political
+2024-10-10,India,IN,en.wikipedia,1137487,Ratan_Naval_Tata,Q333460,1934635,Indian industrialist and philanthropist (1937–2024),political
+2024-10-10,India,IN,en.wikipedia,2773784,Tata_Family,Q3515994,662685,Indian business family,political
+2024-10-10,India,IN,en.wikipedia,28192065,Noel_Naval_Tata,Q12779926,354700,Indian–born Irish businessman (born 1957),political
+2023-05-06,United Kingdom,GB,en.wikipedia,7121294,Penelope_Mordaunt,Q580464,346023,British politician (born 1973),political
+2023-05-06,United Kingdom,GB,en.wikipedia,125248,"Charles,_King_of_the_United_Kingdom",Q43274,219861,King of the United Kingdom and other Commonwealth realms since 2022 (born 1948),political
+2023-05-06,United Kingdom,GB,en.wikipedia,160811,"Camilla,_Duchess_of_Cornwall",Q152239,188503,Queen Consort of the United Kingdom since 2022,political
+2023-11-13,United Kingdom,GB,en.wikipedia,419342,David_Cameron,Q192,390194,British politician (born 1966),political
+2023-11-13,United Kingdom,GB,en.wikipedia,46646833,Suella_Braverman,Q19957769,253527,UK lawyer and politician,political
+2023-11-13,United Kingdom,GB,en.wikipedia,17311614,James_Cleverly,Q6131460,170794,British politician (born 1969),political
+2024-07-05,United Kingdom,GB,en.wikipedia,18681491,Keir_Starmer,Q6383803,648385,Prime Minister of the United Kingdom since 2024,political
+2024-07-05,United Kingdom,GB,en.wikipedia,62193830,2024_State_Opening_of_Parliament,Q78851988,269202,election to the 59th United Kingdom House of Commons,political
+2024-07-05,United Kingdom,GB,en.wikipedia,46676222,2019_UK_general_election,Q30173038,138270,election to the 58th United Kingdom House of Commons,political
+2024-11-06,United Kingdom,GB,en.wikipedia,4848272,Donald_J._Trump,Q22686,271016,"president of the United States (2017–2021, 2025–present)",political
+2024-11-06,United Kingdom,GB,en.wikipedia,59568546,2024_U.S._presidential_election,Q101110072,201230,60th quadrennial U.S. presidential election,political
+2024-11-06,United Kingdom,GB,en.wikipedia,48410011,2020_U.S._presidential_election,Q22923830,179242,59th quadrennial U.S. presidential election,political
+2023-03-15,United States,US,en.wikipedia,15992,Jimmy_Carter,Q23685,291328,president of the United States from 1977 to 1981 (1924–2024),political
+2023-03-15,United States,US,en.wikipedia,46332325,Python,Q747452,242280,Wikimedia disambiguation page,political
+2023-03-15,United States,US,en.wikipedia,40113,Ides_of_March,Q948604,154325,day on the Roman calendar that corresponds to 15 March,political
+2023-10-25,United States,US,en.wikipedia,14533,India,Q668,3504791,country in South Asia,political
+2023-10-25,United States,US,en.wikipedia,46274605,Mike_Johnson_(Louisiana_politician),Q19880665,881801,Speaker of the United States House of Representatives,political
+2023-10-25,United States,US,en.wikipedia,15992,Jimmy_Carter,Q23685,298208,president of the United States from 1977 to 1981 (1924–2024),political
+2023-11-13,United States,US,en.wikipedia,14533,India,Q668,3520115,country in South Asia,political
+2023-11-13,United States,US,en.wikipedia,15992,Jimmy_Carter,Q23685,278670,president of the United States from 1977 to 1981 (1924–2024),political
+2023-11-13,United States,US,en.wikipedia,2988043,Bass_Reeves,Q4867957,88729,deputy U.S. marshal,political
+2024-07-15,United States,US,en.wikipedia,53396477,J.D._Vance,Q28935729,3397556,vice president of the United States since 2025,political
+2024-07-15,United States,US,en.wikipedia,51957306,Hillbilly_Elegy,Q27536725,468968,2016 memoir by J. D. Vance,political
+2024-07-15,United States,US,en.wikipedia,21207432,Shannen_Doherty,Q207598,400573,American actress (1971–2024),political
+2024-07-22,United States,US,en.wikipedia,3120522,Kamala_Harris,Q10853588,1231561,Vice President of the United States from 2021 to 2025,political
+2024-07-22,United States,US,en.wikipedia,71595973,Kimberly_Cheatle,Q113613762,217326,American law enforcement officer,political
+2024-07-22,United States,US,en.wikipedia,53396477,J.D._Vance,Q28935729,214672,vice president of the United States since 2025,political
+2024-11-06,United States,US,en.wikipedia,48410011,2020_U.S._presidential_election,Q22923830,1848918,59th quadrennial U.S. presidential election,political
+2024-11-06,United States,US,en.wikipedia,59568546,2024_U.S._presidential_election,Q101110072,1160814,60th quadrennial U.S. presidential election,political
+2024-11-06,United States,US,en.wikipedia,21377251,2016_U.S._presidential_election,Q699872,889122,58th quadrennial U.S. presidential election,political
+2024-11-13,United States,US,en.wikipedia,34076202,Hegseth,Q7172014,2146555,American military officer and government official (born 1980),political
+2024-11-13,United States,US,en.wikipedia,38902978,Matt_Gaetz,Q16221742,714936,United States Representative from Florida from 2017 to 2024 (born 1982),political
+2024-11-13,United States,US,en.wikipedia,26328774,Tulsi_Gabbard,Q32620,237120,American politician (born 1981),political

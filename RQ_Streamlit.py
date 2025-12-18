@@ -112,26 +112,54 @@ I also expect to see an increase in the slope for political pageviews depending 
 - Spikes happen when an event may be recent or have current media coverage but don't reflect long-term political engagement
 """)
 
+    image1 = 'StackedBar.jpeg'
 
+    st.image(
+        image1,
+        caption='Stacked Bar Chart that displays an even amount of engagement across all countries, ranging from 28-32%',
+        width=1200
+    )
+
+    image2 = 'LineChart.jpeg'
+
+    st.image(
+        image2,
+        caption='Line Chart that displays different spikes in political pageviews over the course of 2023-2024',
+        width=1200
+    )
+
+    image3 = 'BarChart.jpeg'
+
+    st.image(
+        image3,
+        caption='Bar Chart that displays political and non-political pageviews side-by-side per country',
+        width=1200
+    )
 
 
 
 
 with data_sum:
+    events_df = pd.read_csv("top_articles_on_spike_days.csv")
+
     st.header("Data Summary")
-    st.markdown("The dataset consists of the **pageviewes of the top 10,000 most-viewed Wikipedia articles** across five countries (United States, United Kingdom, Canada, Australia, and India) during the years **2023–2024**.")
-    st.markdown("**Time Interval:** February 2023 – December 2024")
+    st.markdown("The dataset consists of the **pageviews of the top 10,000 most-viewed Wikipedia articles** across five countries (United States, United Kingdom, Canada, Australia, and India) during the years **2023–2024**.")
+    st.markdown("""**Time Interval:** February 2023 – December 2024
+- **Start Date:** 2023-02-06
+- **End Date:** 2024-12-31
+""")
     st.markdown("**Wiki:** English Wikipedia (`en.wikipedia`)")
     st.markdown("**Countries:** United States, United Kingdom, Canada, Australia, India")
-
-    st.markdown("**CSV File:** The CSV files consists of the 'date', 'country_code', 'label', and total 'pageviews' of that label and country for that day")
-    # --- Dataset Preview ---
-    st.header("Dataset Overview")
+    st.markdown("**First CSV File:** The CSV files consists of the 'date', 'country_code', 'label', and total 'pageviews' of that label and country for that day")
+    st.markdown("**Second CSV File:** After identifying dates in countries which displayed a spike in political pageviews, I made a new CSV file which contains the top 3 viewed political articles for that respected date and country to determine which articles/political events caused that spike")
+    st.header("Dataset Overview: First CSV")
     country = st.selectbox("Select a country to preview its dataset:", c_codes.keys())
     st.write("#### Sample Rows")
     st.dataframe(df.head())
-    st.write("#### Summary Statistics")
-    st.write(df.describe())
+    
+    st.header("Dataset Overview: Second CSV")
+    st.write("#### Sample Rows")
+    st.dataframe(events_df.head())
 
 
 
@@ -152,7 +180,6 @@ The table below displays a sample of the new column added to the Australia CSV f
     st.dataframe(sample.head())
 
     st.markdown("""
-### Final CSV FIle
 Once each article was labeled in the 5 CSV files, I made a smaller CSV file which contained the sums of political, non-political, and No QID pageviews per country.
 """)
     st.write("#### Sample Rows")
@@ -169,23 +196,29 @@ with classification:
     st.markdown("""
 ### Classification for Identifying politic related articles
 
-#### Getting the text
-**1.** Accumulated text of the first paragraphs of **political Wikipedia articles** based on the elections listed in https://en.wikipedia.org/wiki/List_of_elections_in_2024 and https://en.wikipedia.org/wiki/List_of_elections_in_2023, focusing on the following countries: USA, Canada, UK, Australia, and India. Added paragraphs from articles in the politics section of https://wikimediafoundation.org/news/2024/12/03/announcing-english-wikipedias-most-popular-articles-of-2024/since there are several articles listed in relation to politics
+#### Getting the text 
+**1.** Accumulated text of the first paragraphs of **political Wikipedia articles** based on the elections listed in https://en.wikipedia.org/wiki/List_of_elections_in_2024 and https://en.wikipedia.org/wiki/List_of_elections_in_2023, focusing on the following countries: USA, Canada, UK, Australia, and India. Added paragraphs from articles in the politics section of https://wikimediafoundation.org/news/2024/12/03/announcing-english-wikipedias-most-popular-articles-of-2024/since there are several articles listed in relation to politics. Over 60 paragraphs from 60 articles were added with at least 8 paragraphs from each chosen country.
 
-**2.** Accumulating text of the first paragraphs of **non-political Wikipedia articles** based on the top wikipedia articles listed in https://wikimediafoundation.org/news/2023/12/05/announcing-wikipedias-most-popular-articles-of-2023/ and https://wikimediafoundation.org/news/2024/12/03/announcing-english-wikipedias-most-popular-articles-of-2024/
+**2.** Accumulating text of the first paragraphs of **non-political Wikipedia articles** based on the top wikipedia articles listed in https://wikimediafoundation.org/news/2023/12/05/announcing-wikipedias-most-popular-articles-of-2023/ and https://wikimediafoundation.org/news/2024/12/03/announcing-english-wikipedias-most-popular-articles-of-2024/. 60 paragraphs from 60 different articles were chosen.
 
 #### Creating the Classifier
-**3.** Combining "political" amd "non-political" and cleaning up the text
+**3.** Merging the two datasets (political and non-political) and cleaning the text
+            
+**4.** Vectorizing the text using Bag-Of-Words (CountVectorizer) then fitting the vectorizer on the training text
 
-**4.** Veztorizing the text and using MultinomialNB
-
-#### Testing the Classifier
-**5.** Tested the classifier with some testing paragraphs and descriptions: All tests came out accurate
+**5.** Training the Multinomial Naive Bayes classifier and transforming the test set
 
 #### Evaluate Classifier
-**Accuracy:** 92.795  
-**F1 Score:** 92.795  
+**Accuracy:** 85.18% 
 """)
+    
+    image = 'ConfusionMatrix.png'
+
+    st.image(
+        image,
+        caption='Confusion Matrix for Naive Bayes Text Classifier',
+        width=500
+    )
 
 
 
@@ -217,9 +250,15 @@ All countries have the **same mean proportion** of political-page views with lit
 
 **Alternative Hypothesis (H₁):**  
 At least one country differs.  
-
 """)
 
+    image1 = 'StackedBar.jpeg'
+
+    st.image(
+        image1,
+        caption='Stacked Bar Chart that displays an even amount of engagement across all countries, ranging from 28-32%',
+        width=1200
+    )
 
 
 with graphs:
@@ -368,13 +407,22 @@ with graphs:
         .reset_index()
     )
 
+    all_countries = agg["country_code"].unique()
+
+    full_index = pd.MultiIndex.from_product(
+        [all_countries, all_labels],
+        names=["country_code", "label"]
+    )
+
+    agg = agg.set_index(["country_code", "label"]).reindex(full_index, fill_value=0).reset_index()
+
     total_views = agg.groupby("country_code")["views"].transform("sum")
     agg["percent"] = agg["views"] / total_views * 100
 
     fig = px.bar(
         agg,
         x="country_code",
-        y="views",
+        y="percent",
         color="label",
         title="Stacked Distribution of Article Pageview Types by Country",
         barmode="stack",
@@ -387,7 +435,7 @@ with graphs:
     )
 
     fig.update_layout(
-        yaxis_title="Total Views",
+        yaxis_title="Percentage of Views (%)",
         legend_title_text="Article Type",
         height=500
     )
@@ -396,7 +444,6 @@ with graphs:
 
     st.markdown("### Monthly Sample Table")
     st.dataframe(grouped.head(20))
-
 
 
 
@@ -418,7 +465,6 @@ Overall percentage of political pageviews seen in all countries stayed consisten
 - Australia and Canada show smaller trends in pageviews
 
 ### Limitations
-- Due to the graphs consisting only of pageviews data I am unable to determine the exact article that cause spikes in political pageviews. This led to outside investigation and inferences on what could've caused these spikes
 - The use of English Wikipedia also limits the population because, although most of these countries consist of primarily English speakers, there are other other languages that should be taken into consideration before deciding on a final conclusion.
 - Topics seen as political can be subjective (e.g. Historical events, Geographical locations, Religion, etc.) and false positives can still occur
 - Countries tend to use Wikipedia differently, not all countries actively use Wikipedia so the amount of pageviews in different countries display a large contrast and may not directly be tied to how engaged a country is to politics.
@@ -427,57 +473,47 @@ Overall percentage of political pageviews seen in all countries stayed consisten
 - Not everyone has equal access to the internet, Wikipedia, English-language content,  or digital literacy. The dataset only reflects those who can access English Wikipedia and not all people who care about politics.
 - Event bias: High pageviews don't reflect importance, they may just reflect media coverage and higher controversies
 - Spikes happen when an event may be recent or have current media coverage but don't reflect long-term political engagement
+                
+### Aligning Spikes in Political Pageviews to Articles/Events
 """)
 
+    events_df["date"] = events_df["date"].astype(str)
 
-
-    us_events_df = pd.DataFrame([
-        ["USA", "2023-03-15", "13.29M", "Federal Reserve decision period; national political attention on banking instability"],
-        ["USA", "2023-10-25", "13.76M", "U.S. House elects new Speaker (Mike Johnson)"],
-        ["USA", "2023-11-13 to 2023-11-27", "12.74M - 13.6M", "Congressional funding negotiations and national political coverage"],
-        ["USA", "2024-07-15", "11.04M", "Major 2024 election-year activity; conventions and campaign events"],
-        ["USA", "2024-07-22", "10.57M", "Continuation of 2024 convention season and national political events"],
-        ["USA", "2024-11-06", "21.16M", "Post–2024 general election coverage (Election Day was Nov 5)"],
-        ["USA", "2024-11-13", "11.09M", "Post-election transition period and certification processes"]
-    ], columns=["country", "date", "pageviews", "possible_event"])
-
-    st.markdown("#### Political Events Associated With U.S. Pageview Peaks")
-    st.dataframe(us_events_df, use_container_width=True)
-
-    uk_events_df = pd.DataFrame([
-        ["UK", "2023-05-06", "3.88M", "Coronation of King Charles III"],
-        ["UK", "2023-11-13", "3.55M", "David Cameron returns as Foreign Secretary after cabinet reshuffle"],
-        ["UK", "2024-07-05", "5.03M", "Day after 2024 general election; Labour landslide victory"],
-        ["UK", "2024-11-06", "2.98M", "UK news dominated by global events (U.S. election, Middle East conflict)"]
-    ], columns=["country", "date", "pageviews", "possible_event"])
-
-    st.markdown("#### Political Events Associated With UK Pageview Peaks")
-    st.dataframe(uk_events_df, use_container_width=True)
-
+    def show_country_events(df, country_name, heading):
+        country_df = df[df["country"] == country_name]
+        st.markdown(f"#### {heading}")
+        st.dataframe(
+            country_df[["date","country", "views", "article"]],
+            use_container_width=True
+        )
     
-    india_events_df = pd.DataFrame([
-        ["India", "2023-03-24", "4.07M", "Rahul Gandhi disqualified from Parliament after defamation conviction"],
-        ["India", "2023-05-13", "5.58M", "Karnataka Assembly election results; Congress victory"],
-        ["India", "2023-12-03", "5.76M", "Five-state election period; results announced Dec 4 with major BJP wins"],
-        ["India", "2024-06-04", "11.48M", "2024 general election results; BJP loses majority, NDA forms coalition"],
-        ["India", "2024-10-10", "5.42M", "Major political/diplomatic events including PM Modi’s Laos visit"]
-    ], columns=["country", "date", "pageviews", "possible_event"])
+    show_country_events(
+        events_df,
+        "United States",
+        "Political Events Associated With U.S. Pageview Peaks"
+    )
 
-    st.markdown("#### Political Events Associated With India Pageview Peaks")
-    st.dataframe(india_events_df, use_container_width=True)
+    show_country_events(
+        events_df,
+        "United Kingdom",
+        "Political Events Associated With UK Pageview Peaks"
+    )
 
-    australia_events_df = pd.DataFrame([
-        ["Australia", "2023-05-06", "864k", "No major national event; routine political news and ongoing 2023 political developments"],
-        ["Australia", "2023-10-14", "704k", "Indigenous Voice to Parliament referendum (national 'No' vote)"],
-        ["Australia", "2024-11-06", "1.36M", "Federal Parliament activity; political controversies covered in national media; Possible coverage of US politics"]
-    ], columns=["country", "date", "pageviews", "possible_event"])
+    show_country_events(
+        events_df,
+        "India",
+        "Political Events Associated With India Pageview Peaks"
+    )
 
-    st.markdown("#### Political Events Associated With Australia Pageview Peaks")
-    st.dataframe(australia_events_df, use_container_width=True)
+    show_country_events(
+        events_df,
+        "Australia",
+        "Political Events Associated With Australia Pageview Peaks"
+    )
 
-    canada_events_df = pd.DataFrame([
-        ["Canada", "2024-11-06", "2.34M", "Canadian government orders TikTok to cease operations; national discussion on U.S. election impact"]
-    ], columns=["country", "date", "pageviews", "possible_event"])
+    show_country_events(
+        events_df,
+        "Canada",
+        "Political Events Associated With Canadian Pageview Peaks"
+    )
 
-    st.markdown("#### Political Events Associated With Canadian Pageview Peaks")
-    st.dataframe(canada_events_df, use_container_width=True)
